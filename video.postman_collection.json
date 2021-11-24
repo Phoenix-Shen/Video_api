@@ -16,7 +16,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/ssk/Desktop/QQ录屏20211120182727.mp4"
+							"src": "/C:/Users/ssk/Desktop/QQ录屏20211124105242.mp4"
 						},
 						{
 							"key": "effect",
@@ -56,7 +56,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Windows/System32/mstsc.exe"
+							"src": "/C:/Users/ssk/Desktop/QQ录屏20211124105242.mp4"
 						},
 						{
 							"key": "effect",
@@ -74,6 +74,74 @@
 					"path": [
 						"api",
 						"videoClipEffect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "No effect",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/ssk/Desktop/QQ录屏20211124105242.mp4"
+						},
+						{
+							"key": "effect",
+							"value": "WATERMARK",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{ipaddress}}:{{port}}/api/videoClipEffect",
+					"host": [
+						"{{ipaddress}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"videoClipEffect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Concat",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"project\": \"video's name\",\r\n  \"timeline\": [\r\n    {\r\n      \"index\": 0,\r\n      \"onLineId\": 46\r\n    },\r\n    {\r\n      \"index\": 1,\r\n      \"onLineId\": 47\r\n    },\r\n     {\r\n      \"index\": 2,\r\n      \"onLineId\": 48\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ipaddress}}:{{port}}/api/contenateAndPost",
+					"host": [
+						"{{ipaddress}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"contenateAndPost"
 					]
 				}
 			},

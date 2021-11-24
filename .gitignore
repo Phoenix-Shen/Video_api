@@ -1,0 +1,7 @@
+/utils/ffmpeg
+/utils/neural-style
+/logs/*
+/static/videos/*
+/static/images/*
+*.exe
+*.exe~

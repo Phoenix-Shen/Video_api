@@ -1,0 +1,12 @@
+server:
+  port: 8080
+  address: localhost
+
+datasource:
+  driverName: mysql
+  host: 127.0.0.1
+  port: 3306
+  database: ssk
+  userName: root
+  password: asdf
+  charset: utf8

@@ -151,7 +151,7 @@ func ConcatenateViedoFiles(txtPath string) (string, error) {
 	// ffmpeg -f concat -i filelist.txt -c copy output.mkv
 	//./utils/ffmpeg/bin/ffmpeg.exe -f concat -safe 0 -i ./static/videos/21LitFPQjdVli8SJyJkTtVh79xC.txt -c copy a.mp4
 	uniqueVideoName := fmt.Sprintf("./static/videos/%s", GetUniqueVideoName("1.mp4"))
-	cmd := exec.Command("./utils/ffmpeg/bin/ffmpeg.exe", "-f", "concat", "-safe", "0", "-i", txtPath, "-c", "copy", uniqueVideoName)
+	cmd := exec.Command("./utils/ffmpeg/bin/ffmpeg.exe", "-f", "concat", "-safe", "0", "-i", txtPath, uniqueVideoName)
 
 	cmd.Stdout = &bytes.Buffer{}
 	cmd.Stderr = &bytes.Buffer{}

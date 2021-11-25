@@ -1,10 +1,15 @@
 package utils
 
 import (
+	"bytes"
 	"errors"
+	"fmt"
+	"io/ioutil"
 	"math/rand"
+	"net/http"
 	"os"
 	"path"
+	"strconv"
 	"strings"
 	"time"
 	"video_api/model"
@@ -61,7 +66,11 @@ func ParseTimelineSequense(timelines []model.Timeline, db *gorm.DB) (string, err
 
 	for _, timeline := range timelines {
 		var vef model.VideoEffect
-		vef.ID = uint(timeline.OnLineId)
+		uintID, err := strconv.Atoi(timeline.OnLineId)
+		vef.ID = uint(uintID)
+		if err != nil {
+			return "", err
+		}
 		db.Where("ID = ?", vef.ID).First(&vef)
 		localPaths += "file " + path.Base(vef.LocalPath) + "\n"
 		if vef.LocalPath == "" {
@@ -89,4 +98,32 @@ func ParseTimelineSequense(timelines []model.Timeline, db *gorm.DB) (string, err
 	defer file.Close()
 	return uniqueName, nil
 
+}
+
+//upload video file to the server
+func UploadVideoFile(videoName string, videoNetLocation string) (string, error) {
+	requestBody := fmt.Sprintf(`{
+	"controller": "1612779773437",
+	"userId": "1612779773437",
+	"videoName": "%s",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxNjEyNzc5NzczNDM3IiwiaWF0IjoxNjEyNzgwMDE0fQ.J27ujArwYmr2b7Muv2wI3FEs1YbXO8Ce2llju6dMzjo",
+	"url": "%s"
+	}`, videoName, "http://"+viper.GetString("server.address")+":"+viper.GetString("server.port")+videoNetLocation[1:])
+
+	var jsonStr = []byte(requestBody)
+
+	url := "https://qcmt57.fn.thelarkcloud.com/createVideo"
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	return string(body), nil
 }

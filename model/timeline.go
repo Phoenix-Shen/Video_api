@@ -7,5 +7,5 @@ type RcvObj struct {
 
 type Timeline struct {
 	Index    int
-	OnLineId int
+	OnLineId string
 }

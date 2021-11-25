@@ -61,6 +61,11 @@ func HandleEffectRequest(ctx *gin.Context) {
 			return
 		}
 		videoeft.CoverPath = fmt.Sprintf("./static/images/%s.jpg", utils.GetFileNamewithoutExt(videoPath))
+	} else if videoeft.Effect == "DEMO" {
+		videoeft.LocalPath = "./static/videos/flower.mp4"
+		videoeft.CoverPath = "./static/images/flower.png"
+		videoeft.PathAfterProcess = "./static/videos/flower.mp4"
+		videoeft.Effect = "STYLE"
 	} else {
 		err = utils.GetFirstFrame(videoeft.LocalPath)
 		if err != nil {
@@ -71,6 +76,7 @@ func HandleEffectRequest(ctx *gin.Context) {
 		videoeft.PathAfterProcess = videoeft.LocalPath
 		videoeft.Effect = "none"
 	}
+
 	//save the object to database
 	db := common.GetDB()
 	db.Create(&videoeft)

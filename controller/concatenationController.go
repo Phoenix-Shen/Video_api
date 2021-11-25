@@ -16,7 +16,7 @@ func HandleConcatenationRequeset(ctx *gin.Context) {
 
 	if err := ctx.ShouldBindJSON(&obj); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"ctx.ShouldBindJSON error": err.Error(),
 		})
 		return
 	}
@@ -30,7 +30,7 @@ func HandleConcatenationRequeset(ctx *gin.Context) {
 
 	videoPath, err := utils.ConcatenateViedoFiles(txtPath)
 	if err != nil {
-		response.Fail(ctx, nil, err.Error())
+		response.Fail(ctx, nil, "在执行拼接的过程中出现错误:"+err.Error())
 		return
 	}
 
